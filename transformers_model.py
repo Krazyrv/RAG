@@ -12,11 +12,12 @@ class TransformerModel():
         """
         # Run the device on GPU only if NVIDIA CUDA drivers are installed.
 
-        if not use_transformers:
-            self.model = ChatResponse
+        if use_transformers is not False:
+            # self.model = ChatResponse
+            pass
 
         else:
-
+            
             self.device = 'cuda' if torch.cuda.is_available() and use_gpu else 'cpu'
 
             if self.device == 'cpu': print("No GPU found: using CPU for model.")
@@ -29,11 +30,12 @@ class TransformerModel():
             else:
                 quantization_config = None
 
-
+            print(f"Loading transformer model and tokenizer from transformers library: {model_name}\nPlease wait...\n")
+            
             model_method = AutoModelForCausalLM if causal else AutoModel
 
-            self.model = model_method.from_pretrained(model_name, trust_remote_code=True, device_map=self.device, quantization_config = quantization_config, token=os.getenv('HF_TOKEN'))
+            self.model = model_method.from_pretrained(model_name, trust_remote_code=True, device_map=self.device, quantization_config = quantization_config) #, token=os.getenv('HF_TOKEN'))
         
-            self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, device_map=self.device, quantization_config = quantization_config, token=os.getenv('HF_TOKEN'))
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, device_map=self.device, quantization_config = quantization_config) #, token=os.getenv('HF_TOKEN'))
 
 

@@ -1,0 +1,6 @@
+transformers
+ollama
+torch
+tqdm
+bitsandbytes
+
